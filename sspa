@@ -45,7 +45,8 @@ function dev_server() {
 
 function livereload_server() {
   cd public
-  exec livereloadx -s -p 9292 "$PWD"
+  # exec livereloadx -s -p 9292 "$PWD"
+  exec live-server --port=9292
 }
 
 function create_s3_bucket() {
