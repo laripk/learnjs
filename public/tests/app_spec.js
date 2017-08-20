@@ -31,6 +31,16 @@ describe('LearnJS', function() {
 		expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
 	});
 	
+	it('subscribes to the hash change event', function() {
+		//given
+		learnjs.appOnReady();
+		spyOn(learnjs, 'showView');
+		//when
+		$(window).trigger('hashchange');
+		//then
+		expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
+	});
+	
 	describe('problem view', function(){
 		it('has a title that includes the problem number', function() {
 			//when
