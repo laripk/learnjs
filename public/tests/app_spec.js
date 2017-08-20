@@ -12,4 +12,13 @@ describe('LearnJS', function() {
 		//then
 		expect($('.view-container .landing-view').length).toEqual(1);
 	});
+	
+	it('passes the hash view parameter to the view function', function() {
+		//given
+		spyOn(learnjs, 'problemView');
+		//when
+		learnjs.showView('#problem-42');
+		//then
+		expect(learnjs.problemView).toHaveBeenCalledWith('42');
+	});
 });
