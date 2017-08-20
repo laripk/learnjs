@@ -46,7 +46,7 @@ describe('LearnJS', function() {
 			//when
 			var view = learnjs.problemView('3');
 			//then
-			expect(view.text()).toEqual('Problem #3 Coming soon!');
+			expect(view.find('.title').text()).toEqual('Problem #3');
 		});
 	});
 });
