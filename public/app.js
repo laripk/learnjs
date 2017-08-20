@@ -1,10 +1,29 @@
 'use strict';
 var learnjs = {};
 
+learnjs.problems = [
+	{
+		description: "What is truth?",
+		code: "function problem() { return ___; }"
+	},
+	{
+		description: "Simple Math",
+		code: "function problem() { return 42 === 6 * ___; }"
+	}
+];
+
+learnjs.applyObject = function(obj, elem) {
+	for(var key in obj) {
+		elem.find('[data-name="' + key + '"]').text(obj[key]);
+	}
+};
+
+
 learnjs.problemView = function(problemNumber) {
 	var view = $('.templates .problem-view').clone();
 	var title = 'Problem #' + problemNumber;
 	view.find('.title').text(title);
+	learnjs.applyObject(learnjs.problems[problemNumber - 1], view);
 	return view;
 }
 

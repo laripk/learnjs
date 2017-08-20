@@ -41,12 +41,71 @@ describe('LearnJS', function() {
 		expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
 	});
 	
+	describe('apply object', function() {
+		it('when more object than element, then it ignores the extra properties', function() {
+			//given
+			var obj = { 
+				one: "The first elephant.",  
+				two: "The second zebra.",
+				three: "My merry espadrilles."
+			}
+			var elem = $("<div><p id='aa' data-name='one'></p><p id='bb' data-name='two'></p></div>");
+			//when
+			learnjs.applyObject(obj, elem);
+			//then
+			expect(elem.find('#aa').text()).toEqual("The first elephant.");
+			expect(elem.find('#bb').text()).toEqual("The second zebra.");
+			expect(elem.find('[data-name=three]').text()).toEqual("");
+		});
+
+		it('when more element than object, then it ignores the extra elements', function() {
+			//given
+			var obj = { 
+				one: "The first elephant.",  
+				two: "The second zebra."
+			}
+			var elem = $("<div><p id='aa' data-name='one'></p><p id='bb' data-name='two'></p><p id='cc' data-name='three'></p></div>");
+			//when
+			learnjs.applyObject(obj, elem);
+			//then
+			expect(elem.find('#aa').text()).toEqual("The first elephant.");
+			expect(elem.find('#bb').text()).toEqual("The second zebra.");
+			expect(elem.find('#cc').text()).toEqual("");
+		});
+
+		it('puts the object values in the element', function() {
+			//given
+			var obj = { 
+				one: "The first elephant.",  
+				two: "The second zebra."
+			}
+			var elem = $("<div><p id='aa' data-name='one'></p><p id='bb' data-name='two'></p></div>");
+			//when
+			learnjs.applyObject(obj, elem);
+			//then
+			expect(elem.find('#aa').text()).toEqual("The first elephant.");
+			expect(elem.find('#bb').text()).toEqual("The second zebra.");
+		});
+	});
+	
 	describe('problem view', function(){
 		it('has a title that includes the problem number', function() {
 			//when
 			var view = learnjs.problemView('3');
 			//then
 			expect(view.find('.title').text()).toEqual('Problem #3');
+		});
+		
+		it('applies the problem object', function() {
+			//given
+			spyOn(learnjs, 'applyObject');
+			//when
+			var view = learnjs.problemView('2');
+			//then
+			expect(learnjs.applyObject.calls.any()).toEqual(true);
+			var args = learnjs.applyObject.calls.mostRecent().args;
+			expect(args.length).toEqual(2);
+			expect(args[0]).toEqual(learnjs.problems[1]);
 		});
 	});
 });
