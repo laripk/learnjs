@@ -5,4 +5,11 @@ describe('LearnJS', function() {
 		//then
 		expect($('.view-container .problem-view').length).toEqual(1);
 	});
+	
+	it('shows the landing page view when there is no hash', function() {
+		//when
+		learnjs.showView('');
+		//then
+		expect($('.view-container .landing-view').length).toEqual(1);
+	});
 });
