@@ -21,4 +21,13 @@ describe('LearnJS', function() {
 		//then
 		expect(learnjs.problemView).toHaveBeenCalledWith('42');
 	});
+	
+	describe('problem view', function(){
+		it('has a title that includes the problem number', function() {
+			//when
+			var view = learnjs.problemView('3');
+			//then
+			expect(view.text()).toEqual('Problem #3 Coming soon!');
+		});
+	});
 });
