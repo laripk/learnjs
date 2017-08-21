@@ -91,21 +91,47 @@ describe('LearnJS', function() {
 	describe('problem view', function(){
 		it('has a title that includes the problem number', function() {
 			//when
-			var view = learnjs.problemView('3');
+			var vw = learnjs.problemView('3');
 			//then
-			expect(view.find('.title').text()).toEqual('Problem #3');
+			expect(vw.find('.title').text()).toEqual('Problem #3');
 		});
 		
 		it('applies the problem object', function() {
 			//given
 			spyOn(learnjs, 'applyObject');
 			//when
-			var view = learnjs.problemView('2');
+			var vw = learnjs.problemView('2');
 			//then
 			expect(learnjs.applyObject.calls.any()).toEqual(true);
 			var args = learnjs.applyObject.calls.mostRecent().args;
 			expect(args.length).toEqual(2);
 			expect(args[0]).toEqual(learnjs.problems[1]);
+		});
+		
+		var view = null;
+		
+		beforeEach(function() {
+			view = learnjs.problemView('1');
+		});
+		
+		describe('answer section', function() {
+			it('can check a correct answer by hitting a button', function() {
+				//given
+				view.find('.answer').val('true');
+				//when
+				view.find('.check-btn').click();
+				//then
+				expect(view.find('.result').text()).toEqual('Correct!');
+			});
+			
+			it('rejects an incorrect answer', function() {
+				//given
+				view.find('.answer').val('false');
+				//when
+				view.find('.check-btn').click();
+				//then
+				expect(view.find('.result').text()).toEqual('Incorrect :-(');
+			});
 		});
 	});
 });
